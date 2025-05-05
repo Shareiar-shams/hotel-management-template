@@ -6,7 +6,7 @@
                     <strong>VUE JS Organisation</strong>
                     <button class="close-reservation" @click="$emit('close-reservation-method')">×</button>
                 </div>
-                <div class="reservationBody">
+                <div class="reservationBody text-center">
                     <form @submit.prevent="$emit('reservation-submit')" class="reservationform">
                         <h4 class="title">
                             If you wish to carry out any administrative step by telephone,
@@ -102,6 +102,8 @@ export default {
     }
 
     .reservationBody {
+        margin: auto;
+        width: 70%;
         margin-top: 40px;
         align-items: center;
         text-align: center;
@@ -166,7 +168,7 @@ export default {
     }
 
     .reservationform .square-button {
-        background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmNTEyZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkMjQ3NiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+        
         background-size: 100%;
         background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #ff512f), color-stop(100%, #dd2476));
         background-image: -moz-linear-gradient(left, #ff512f, #dd2476);
@@ -187,7 +189,7 @@ export default {
         padding: 0 60px;
         height: 60px;
         border: none;
-        width: 100%;
+        float: right;
     }
 
 
