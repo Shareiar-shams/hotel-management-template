@@ -3,7 +3,7 @@
         <div class="reservationBox slide-in">
             <div class="container">
                 <div class="reservationHeader">
-                    <strong>VUE JS Organisation</strong>
+                    <h2>VUE JS Organisation</h2>
                     <button class="close-reservation" @click="$emit('close-reservation-method')">×</button>
                 </div>
                 <div class="reservationBody text-center">
@@ -17,9 +17,9 @@
                             <label for="">Localizer</label>
                             <input 
                                 type="text" 
-                                v-model="localizer"
-                                @focus="localizerFocused = true"
-                                @blur="localizerFocused = !!localizer"
+                                @input="$emit('update:localizer', $event.target.value)"
+                                @focus="$emit('update:localizerFocused', true)"
+                                @blur="$emit('update:localizerFocused', false)"
                                 class="form-control"
                                 required
                             />
@@ -29,14 +29,14 @@
                             <label for="">Pin</label>
                             <input 
                                 type="text"
-                                v-model="pin"
-                                @focus="pinFocused = true"
-                                @blur="pinFocused = !!pin"
+                                @input="$emit('update:pin', $event.target.value)"
+                                @focus="$emit('update:pinFocused', true)"
+                                @blur="$emit('update:pinFocused', false)"
                                 class="form-control"
                                 required
                             />
                         </div>
-                        <button class="square-button">See Booking</button>
+                        <button  type="submit" class="square-button">See Booking</button>
                     </form>
                 </div>
             </div>
@@ -47,7 +47,11 @@
 
 <script>
 export default {
-    name: 'ReservationDiv'
+    name: 'ReservationDiv',
+    props: {
+        localizerFocused: Boolean,
+        pinFocused: Boolean
+    }
 }
 </script>
 
@@ -79,26 +83,25 @@ export default {
     }
 
     .reservationHeader {
+        margin-top: -20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
-    .reservationHeader strong {
-        font-size: 20px;
+    .reservationHeader h2 {
+        font-weight:bold;
     }
 
     .close-reservation {
         color: rgb(15, 14, 14);
         border: 0.5px solid rgb(51, 41, 41);
-        opacity: 0.5;
         background-color: #4C4C4C;
         border-radius: 50%;
         font-size: 32px;
-        width: 32px;
-        height: 32px;
+        width: 42px;
+        height: 42px;
         cursor: pointer;
-        padding-bottom: 35px;
     }
 
     .reservationBody {
@@ -150,16 +153,17 @@ export default {
     }
 
     .reservationform .input-block .form-control {
+        width: 100%;
         background-color: transparent;
-        border: medium none;
+        border: none;
         border-radius: 0;
         box-shadow: none;
-        color: #333;
+        color: #fff;
         font-size: 18px;
         height: 40px;
         padding: 0;
         position: relative;
-        top: -20px;
+        top: 10px;
         z-index: 2;
     }
 
@@ -190,6 +194,27 @@ export default {
         height: 60px;
         border: none;
         float: right;
+    }
+
+    @media (max-width: 768px) {
+        .reservationHeader {
+            margin: 0 20px;
+        }
+        .reservationform .square-button {
+            max-width: 200px;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .reservationBox {
+            padding: 10% 0;
+        }
+
+        .close-reservation {
+            
+            opacity: 1;
+            
+        }
     }
 
 
