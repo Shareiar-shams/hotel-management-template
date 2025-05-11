@@ -81,6 +81,10 @@ export default {
 <style scoped>
     /* Navbar */
     .nav {
+        background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #ff512f), color-stop(100%, #dd2476));
+        background-image: -moz-linear-gradient(left, #ff512f, #dd2476);
+        background-image: -webkit-linear-gradient(left, #ff512f, #dd2476);
+        background-image: linear-gradient(to right, #ff512f, #dd2476);
         width: 100%;
         height: 65px;
         position: fixed;
@@ -149,7 +153,7 @@ export default {
     }
 
     .main_list ul li a:hover {
-        color: #aa8f8f;
+        color: #e0d3d3;
     }
 
     /* Mobile View */
