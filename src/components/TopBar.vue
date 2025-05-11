@@ -12,66 +12,78 @@
                             <span class="menu-text">{{ item.name }}</span>
                             <span class="lineBreakDesign">|</span>
                         </a>
-                        <!-- Login form under the anchor with arrow -->
-                        <div
-                            v-if="item.name === 'Log In' && showLoginForm"
-                            class="login-dropdown"
-                        >
-                            <div class="arrow-up"></div>
-                            <div class="login-form-wrapper">
-                                <div class="login-header">
-                                    <span class="brand"><strong><u>TRAVELER</u></strong></span>
-                                    <button class="close-btn" @click="toggleLoginForm">×</button>
-                                </div>
 
-                                <p class="subtitle">
-                                    Log in or <a href="#" class="register-link">Register</a> if you’re not a member yet
-                                </p>
-
-                                <form class="loginForm" @submit.prevent="handleLogin">
-                                    <div class="form-group" :class="{ active: emailFocused || email }">
-                                        <label>Email</label>
-                                        <input
-                                            type="email"
-                                            v-model="email"
-                                            @focus="emailFocused = true"
-                                            @blur="emailFocused = !!email"
-                                            class="form-control"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div class="form-group password-wrapper" :class="{ active: passwordFocused || password }">
-                                        <label>Password</label>
-                                        <input
-                                            :type="showPassword ? 'text' : 'password'"
-                                            v-model="password"
-                                            @focus="passwordFocused = true"
-                                            @blur="passwordFocused = !!password"
-                                            class="form-control"
-                                            required
-                                        />
-                                        <span class="eye-icon" @click="togglePassword">
-                                            {{ showPassword ? '🙈' : '👁️' }}
-                                        </span>
-                                    </div>
-
-                                    <div class="checkbox-wrapper">
-                                        <input type="checkbox" id="remember" />
-                                        <label for="remember">Remember me</label>
-                                    </div>
-
-                                    <button type="submit" class="login-btn">Log In</button>
-
-                                    <div class="forgot-link">
-                                        <a href="#">Have you forgotten your password?</a>
-                                    </div>
-                                </form>
-                            </div>
-                            
-                        </div>
+                        <!-- language dropdown list -->
+                        <transition ref="languageModel" name="fade" v-if="item.name === 'Language' && showMultiLanguage">
+                            <ul style="display:grid; margin-top: 10px;" v-if="showMultiLanguage" class="language-dropdown">
+                                <li @click="selectLanguage('English')">English</li>
+                                <li @click="selectLanguage('বাংলা')">বাংলা</li>
+                                <li @click="selectLanguage('Español')">Español</li>
+                            </ul>
+                        </transition>
+                        
                     </li>
+
                 </ul>
+                <!-- Login form under the anchor with arrow -->
+                <div ref="loginModel"
+                    v-show="showLoginForm"
+                    class="login-dropdown"
+                    @click.stop
+                >
+                    <div class="arrow-up"></div>
+                    <div class="login-form-wrapper">
+                        <div class="login-header">
+                            <span class="brand"><strong><u>TRAVELER</u></strong></span>
+                            <button class="close-btn" @click="toggleLoginForm">×</button>
+                        </div>
+
+                        <p class="subtitle">
+                            Log in or <a href="#" class="register-link">Register</a> if you’re not a member yet
+                        </p>
+
+                        <form class="loginForm" @submit.prevent="handleLogin">
+                            <div class="form-group" :class="{ active: emailFocused || email }">
+                                <label>Email</label>
+                                <input
+                                    type="email"
+                                    v-model="email"
+                                    @focus="emailFocused = true"
+                                    @blur="emailFocused = !!email"
+                                    class="form-control"
+                                    required
+                                />
+                            </div>
+
+                            <div class="form-group password-wrapper" :class="{ active: passwordFocused || password }">
+                                <label>Password</label>
+                                <input
+                                    :type="showPassword ? 'text' : 'password'"
+                                    v-model="password"
+                                    @focus="passwordFocused = true"
+                                    @blur="passwordFocused = !!password"
+                                    class="form-control"
+                                    required
+                                />
+                                <span class="eye-icon" @click="togglePassword">
+                                    {{ showPassword ? '🙈' : '👁️' }}
+                                </span>
+                            </div>
+
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="remember" />
+                                <label for="remember">Remember me</label>
+                            </div>
+
+                            <button type="submit" class="login-btn">Log In</button>
+
+                            <div class="forgot-link">
+                                <a href="#">Have you forgotten your password?</a>
+                            </div>
+                        </form>
+                    </div>
+                    
+                </div>
             </div>
         </div>
     </div>
@@ -79,7 +91,14 @@
     <!-- Reservation Panel -->
 
     <div v-if="showReservation">
-        <Reservation @close-reservation-method="toggleReservationTemplate"  @reservation-submit="reservationHandle"/>
+        <Reservation @close-reservation-method="toggleReservationTemplate"  @reservation-submit="reservationHandle" 
+        v-model:localizer="localizer"
+        v-model:pin="pin"
+        :localizer-focused="localizerFocused"
+        :pin-focused="pinFocused"
+        @update:localizerFocused="localizerFocused = $event"
+        @update:pinFocused="pinFocused = $event"
+    />
     </div>
 </template>
 
@@ -113,7 +132,7 @@ export default {
             ], 
             showLoginForm: false,
             showReservation: false,
-
+            showMultiLanguage: false,
         }
     },
     methods: {
@@ -123,10 +142,15 @@ export default {
             }
         },
         toggleLoginForm() {
-            this.showLoginForm = !this.showLoginForm;
+            setTimeout(() => {
+                this.showLoginForm = !this.showLoginForm;
+            }, 0);
         },
         toggleReservationTemplate() {
             this.showReservation = !this.showReservation;
+        },
+        toggleLanguageDropDown() {
+            this.showMultiLanguage = !this.showMultiLanguage;
         },
         reservationHandle() {
             console.log("Reservation Submitted:", this.localizer, this.pin);
@@ -137,8 +161,43 @@ export default {
                 this.toggleLoginForm();
             } else if (item.name === 'My Reservation') {
                 this.toggleReservationTemplate();
+            } else if (item.name === 'Language') {
+                this.toggleLanguageDropDown();
+            }
+        },
+
+        selectLanguage(name){
+            console.log('Selected language:', name);
+            this.showMultiLanguage = false;
+        },
+
+        handleClickOutside(event) {
+            const loginEl = this.$refs.loginModel;
+            if (
+                this.showLoginForm &&
+                loginEl &&
+                !loginEl.contains(event.target)
+            ) {
+                this.showLoginForm = false;
+            }
+
+            
+            if (
+                this.showMultiLanguage &&
+                event.target.closest('.language-dropdown') === null &&
+                event.target.closest('.menuanchor') === null
+            ) {
+                this.showMultiLanguage = false;
             }
         }
+
+    },
+
+    mounted() {
+        document.addEventListener('click', this.handleClickOutside);
+    },
+    beforeUnmount() {
+        document.removeEventListener('click', this.handleClickOutside);
     },
     
 }
@@ -208,7 +267,7 @@ export default {
     .login-dropdown {
         position: absolute;
         right: 1%;
-        margin-top: 7px;
+        top: 5%;
         background-color: #e4d9d9;
         border: 1px solid #ddd;
         padding: 20px;
@@ -338,7 +397,10 @@ export default {
     .login-btn {
         width: 100%;
         padding: 12px;
-        background-color: #92a4b3;
+        background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #ff512f), color-stop(100%, #dd2476));
+        background-image: -moz-linear-gradient(left, #ff512f, #dd2476);
+        background-image: -webkit-linear-gradient(left, #ff512f, #dd2476);
+        background-image: linear-gradient(to right, #ff512f, #dd2476);
         color: #fff;
         border: none;
         border-radius: 4px;
@@ -417,8 +479,64 @@ export default {
             filter: drop-shadow(0 -2px 2px rgba(0, 0, 0, 0.1));
         }
 
+        .language-dropdown {
+            right: 2%;
+            min-width: 100px;
+            max-width: 100px;
+            margin-top: 10px;
+        }
+
+    }
+
+    .language-dropdown {
+        position: absolute;
+        background: #ffffff;
+        padding: 0.5rem 0;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        margin-top: 10px;
+        list-style: none;
+        z-index: 1500;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        animation: pulse 1s infinite;
     }
 
     
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .language-dropdown li {
+        padding: 10px 16px;
+        cursor: pointer;
+        color: #333;
+        transition: background 0.2s ease, color 0.2s ease;
+        position: relative;
+    }
+
+    .language-dropdown li + li {
+        border-top: 1px solid #eee;
+    }
+
+    .language-dropdown li:hover {
+        background: #f5f5f5;
+        color: #000;
+    }
+
+
+
+    
+    /* Fade animation */
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity 1.0s;
+    }
+    .fade-enter-from, .fade-leave-to {
+        opacity: 0;
+    }
 
 </style>
