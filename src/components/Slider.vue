@@ -68,7 +68,7 @@
             this.showSlides(this.slideIndex);
             this.startAutoSlider();
         },
-        beforeMount() {
+        beforeUnmount() {
             clearInterval(this.autoSlideInterval);
         },
     };
