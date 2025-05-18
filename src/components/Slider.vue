@@ -157,7 +157,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         text-align: center;
-        color: #f4eded;
+        color: #ff512f;
         z-index: 10;
         padding: 10px 20px;
     }
