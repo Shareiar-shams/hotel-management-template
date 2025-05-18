@@ -66,6 +66,7 @@
         },
         mounted() {
             this.showSlides(this.slideIndex);
+            this.startAutoSlider();
         }
     };
 </script>
