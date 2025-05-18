@@ -67,7 +67,10 @@
         mounted() {
             this.showSlides(this.slideIndex);
             this.startAutoSlider();
-        }
+        },
+        beforeMount() {
+            clearInterval(this.autoSlideInterval);
+        },
     };
 </script>
 
