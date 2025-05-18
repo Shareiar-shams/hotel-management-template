@@ -1,21 +1,10 @@
 <template>
-    <TopBar />
-    <NavBar />
-  
+    <router-view />
 </template>
 
 <script>
-import NavBar from './components/NavBar.vue';
-import TopBar from './components/TopBar.vue';
-
-
-export default {
-    name: 'App',
-    components: {
-        NavBar, TopBar
-    }
-}
+    
+    export default {
+    
+    };
 </script>
-
-<style>
-</style>
