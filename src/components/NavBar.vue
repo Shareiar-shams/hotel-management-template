@@ -10,7 +10,7 @@
             <div ref="sidebar" :class="isMenuOpen ? 'sidebar' : 'main_list'" @click.stop>
                 <ul>
                     <li v-for="(item, index) in menuItems" :key="index">
-                        <a :href="item.link">{{ item.name }}</a>
+                        <router-link :to="item.link">{{ item.name }}</router-link>
                     </li>
                 </ul>
             </div>
@@ -79,6 +79,10 @@ export default {
 </script>
 
 <style scoped>
+    * {
+        margin: 0;
+        padding: 0;
+    }
     /* Navbar */
     .nav {
         background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #ff512f), color-stop(100%, #dd2476));
@@ -86,11 +90,6 @@ export default {
         background-image: -webkit-linear-gradient(left, #ff512f, #dd2476);
         background-image: linear-gradient(to right, #ff512f, #dd2476);
         width: 100%;
-        height: 65px;
-        position: fixed;
-        top: 5%;
-        left: 0;
-        z-index: 1000;
         background-color: rgba(205, 205, 224, 0.8);
         transition: background-color 0.3s ease-in-out;
     }
@@ -174,6 +173,7 @@ export default {
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
         display: flex;
         flex-direction: column;
+        z-index: 500;
     }
 
     .sidebar ul {
@@ -216,7 +216,7 @@ export default {
         border: none;
         cursor: pointer;
         position: absolute;
-        top: 12px;
+        top: 40px;
         right: 15px;
         z-index: 1100;
         display: flex;
