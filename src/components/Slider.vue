@@ -34,12 +34,12 @@
             plusSlides(n) {
                 this.slideIndex += n;
                 this.showSlides(this.slideIndex);
-                this.resetAutoSlide();
+                this.resetAutoSlide(); // reset auto slide
             },
             currentSlide(n) {
                 this.slideIndex = n;
                 this.showSlides(this.slideIndex);
-                this.resetAutoSlide();
+                this.resetAutoSlide(); // reset auto slide
             },
             showSlides(n) {
                 const slides = document.getElementsByClassName("mySlides");
@@ -52,27 +52,35 @@
                 }
 
                 slides[this.slideIndex - 1].style.display = "block";
-                
             },
-            startAutoSlider(){
+            startAutoSlide() {
                 this.autoSlideInterval = setInterval(() => {
                     this.plusSlides(1);
                 }, 3000);
             },
-            resetAutoSlide(){
+            resetAutoSlide() {
                 clearInterval(this.autoSlideInterval);
-                this.startAutoSlider;
+                this.startAutoSlide();
+            },
+            handleKeyDown(e){
+                if(e.key === "ArrowRight")
+                    this.plusSlides(1);
+                else if(e.key === "ArrowLeft")
+                    this.plusSlides(-1);
             }
         },
         mounted() {
             this.showSlides(this.slideIndex);
-            this.startAutoSlider();
+            this.startAutoSlide();
+            window.addEventListener("keydown", this.handleKeyDown);
         },
         beforeUnmount() {
             clearInterval(this.autoSlideInterval);
-        },
+            window.removeEventListener("keydown", this.handleKeyDown)
+        }
     };
 </script>
+
 
 
 <style scoped>
