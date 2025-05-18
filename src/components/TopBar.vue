@@ -267,7 +267,7 @@ export default {
     .login-dropdown {
         position: absolute;
         right: 1%;
-        top: 5%;
+        top: 6%;
         background-color: #e4d9d9;
         border: 1px solid #ddd;
         padding: 20px;
@@ -453,7 +453,6 @@ export default {
         .login-dropdown {
             position: absolute;
             right: 2%;
-            margin-top: 10px;
             background-color: #e4d9d9;
             border: 1px solid #ddd;
             padding: 20px;
